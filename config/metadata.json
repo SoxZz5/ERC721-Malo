@@ -1,6 +1,13 @@
 {
-  "name": "",
-  "description": "",
-  "external_url": "",
-  "image": "ipfs://QmeENTKiLr19KjHmRs74wqXezDWh9po2SpsGcFLLBL4ii8"
+  "name": "CT Lunch atop a Skyscraper",
+  "description": "NFT offered on the occasion of Malo's 2 years in the crypto ecosystem",
+  "external_url": "https://twitter.com/malo_nft",
+  "image": "ipfs://QmeENTKiLr19KjHmRs74wqXezDWh9po2SpsGcFLLBL4ii8",
+  "attributes": [
+    {
+      "display_type": "date",
+      "trait_type": "Lunch Date",
+      "value": 1674824400
+    }
+  ]
 }

@@ -35,7 +35,7 @@ contract ERC721Custom is ERC721A, Ownable, DefaultOperatorFilterer {
     returns (string memory)
   {
     require(_tokenId <= maxSupply, "No existing token with this id");
-    return string(abi.encodePacked(baseTokenURI() ,'.json'));
+    return string(abi.encodePacked(baseTokenURI() ,'metadata.json'));
   }
 
   function setApprovalForAll(address operator, bool approved) public override onlyAllowedOperatorApproval(operator) {
