@@ -9,14 +9,18 @@ contract ERC721Custom is ERC721A, Ownable, DefaultOperatorFilterer {
   uint256 public maxSupply = 12;
   string public baseURI;
 
+  event PermanentURI(string _value, uint256 indexed _id);
+
   constructor(string memory _tokenName, string memory _tokenSymbol, string memory _baseURI, address _admin) ERC721A(_tokenName, _tokenSymbol) {
     transferOwnership(_admin);
     baseURI = _baseURI;
   }
-  
+
   function mint(address to) public onlyOwner {
-    require(totalSupply() + 1 <= maxSupply, "Can't mint more token");
+    uint256 tokenId = totalSupply() + 1;
+    require(tokenId <= maxSupply, "Can't mint more token");
     _mint(to, 1);
+    emit PermanentURI(tokenURI(tokenId), tokenId);
   }
 
   function baseTokenURI() public view returns (string memory) {
@@ -30,10 +34,11 @@ contract ERC721Custom is ERC721A, Ownable, DefaultOperatorFilterer {
     override(ERC721A)
     returns (string memory)
   {
+    require(_tokenId <= maxSupply, "No existing token with this id");
     return string(abi.encodePacked(baseTokenURI() ,'.json'));
   }
 
-    function setApprovalForAll(address operator, bool approved) public override onlyAllowedOperatorApproval(operator) {
+  function setApprovalForAll(address operator, bool approved) public override onlyAllowedOperatorApproval(operator) {
     super.setApprovalForAll(operator, approved);
   }
 

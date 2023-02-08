@@ -9,7 +9,22 @@ import 'solidity-coverage';
 
 dotenv.config();
 
-task('verify:contract', async (taskArgs, hre) => {});
+task('verify:contract', async (taskArgs, hre) => {
+  const [owner] = await hre.ethers.getSigners();
+  let ownerAddress = process.env.OWNER_ADDRESS;
+  if (!ownerAddress) ownerAddress = owner.address;
+  console.log(`OWNER FOR NFT CONTRACT: ${ownerAddress}`);
+  const tokenName = process.env.TOKEN_NAME ?? '';
+  const tokenSymbol = process.env.TOKEN_SYMBOL ?? '';
+  const baseURI = process.env.BASE_URI ?? '';
+  console.log(`TOKEN NAME: ${tokenName}`);
+  console.log(`TOKEN SYMBOL: ${tokenSymbol}`);
+  console.log(`BASE URI: ${baseURI}`);
+  await hre.run('verify:verify', {
+    address: process.env.CONTRACT_ADDRESS ?? '',
+    constructorArguments: [tokenName, tokenSymbol, baseURI, owner.address],
+  });
+});
 
 const config: HardhatUserConfig = {
   solidity: {
